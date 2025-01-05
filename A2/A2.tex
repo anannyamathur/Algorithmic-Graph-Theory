@@ -1,0 +1,146 @@
+\documentclass[12pt]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+
+\usepackage[T1]{fontenc}
+\usepackage{epsfig,epsf,psfrag,array,amsmath,amssymb,verbatim,setspace,bm}
+\usepackage{url,comment,enumerate,graphicx,graphics,wrapfig}
+\usepackage[usenames,dvipsnames,svgnameS,table]{xcolor}
+\usepackage[boxed,linesnumbered]{algorithm2e}
+\usepackage{pdfpages,framed,tcolorbox}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{mathtools}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+\setlength\parindent{0pt}
+
+\title{\vspace{-6mm}{ Assignment-2}}
+\author{Anannya Mathur 2023SIY7565}
+\date{}
+\setcounter{secnumdepth}{0}
+
+\begin{document}
+\maketitle
+\noindent
+\vspace{-10mm}
+\section{Question 1}
+\subsection{Question (a):}
+
+$ Prob( a,b \in S_{i}, F \cap S_{i}= \emptyset) = (\frac {1} {k-1})^2(1-\frac {1}{k-1})^{k-1} \ge 
+\frac {1}{4(k-1)^2} \\
+Prob(\forall i, S_{i} \: \text {does not separate a,b from F })
+= \prod_{1\le i\le r} (1-Prob(a,b \in S_{i}, F \cap S_{i}=\emptyset))
+\le (1- \frac {1}{4(k-1)^2})^r \le \frac {1}{n^t}, \text 
+{where r=} 4t(k-1)^2\log_{e}(n). \\
+Prob(\exists ((a,b),F) \: \text {satisfying (a,b),F are not
+separated by } S_{i}) \le \sum_{((a,b),F)\in V^2 \times V^{k-1}} 
+\frac{1}{n^t} \le \frac {n^{k+1}} {n^t} \\
+\therefore \text {t should be k+2} \\
+\therefore r= 4(k+2)(k-1)^2\log_{e}n
+$ 
+
+
+\subsection{Question (b):}
+$
+\text {Every spanning forest } T_{i} \text { will have }
+\le |V_{i}| \: edges. \\
+\text{Probability of a vertex appearing=} \frac {1}{k-1}. \\
+\text {The expected number of edges in H } \le 
+\sum_{i=1}^{r} (\frac {1} {k-1})^{|V_{i}|}|V_{i}|
+\le \sum_{i=1}^{r} \frac {1} {k-1}n \\ = 
+\frac {n} {k-1} 4(k+2)(k-1)^2\log_{e}n \approx O(nk^2logn)\\ \\
+Prob(a\in G, a\notin H )= (1- \frac{1}{k-1})^r \le
+\frac {1}{n^{4(k+2)(k-1)}} \\
+\implies \text {G and H share the same set of vertices with
+high probability.} \\
+\text {Given: G is k-vertex connected.} \\
+\text {To prove: H is k-vertex connectivity preserver of G
+with high probability.}\\
+\text {Suppose H is not k-vertex connected.} \\ \therefore 
+\exists $ a vertex cut of size at most k-1 upon whose
+removal, H gets disconnected. We call this vertex cut F.
+Since G is given to be k-vertex connected, removal of F 
+should not disconnect G $\implies$ there must exist a path
+containing, say vertices a and b, in G-F. With a probability
+$\ge 1- \frac{1}{n},$ there must exist some $S_{i}$ that
+contains a,b but $F \cap S_{i} = \emptyset. \: \therefore$
+No vertex from F is contained in $S_{i}. \: \therefore$ There 
+must exist a path connecting a and b in $T_{i}$ that excludes
+vertices present in F. Therefore, there must exist a path
+connecting a and b in H-F as well since G and H share the same
+set of vertices with high probability. Thus, removal of F 
+does not disconnect H and thus, our earlier claim of H not
+being k-vertex connected stands false. This proves that H is
+indeed a k-vertex connectivity preserver of G. 
+
+\pagebreak
+
+\section {Question 2:}
+
+\subsection{Question a:}
+
+P(degree of vertex=d)= $ {{n-1} \choose {d} } p^d (1-p)^{n-1-d} $ \\
+$\therefore$ P(node v is isolated) = $(1-p)^{n-1}$ \\
+P(i, n-i)= P(a set of nodes is disconnected from n-i nodes
+where $i \in [1,n/2]$)= \\ ${n \choose i}(1-p)^{i(n-i)},$ as
+i(n-i) edges will have to be absent to disconnect the partition 
+(i, n-i). \\
+$\therefore$ P(G is disconnected) $\le \sum_{i=1}^{n/2} 
+{n \choose i}(1-p)^{i(n-i)}=\sum_{i=1}^{n/2} 
+{n \choose i}(1- \frac{5\log n}{n})^{i(n-i)} \le
+\sum_{i=1}^{n/2} {n \choose i} \frac {1}{n^{\frac{5i(n-i)}{n}}}
+\le \sum_{i=1}^{n/2} \frac{n^i}{i!} \frac {1}{n^{\frac{5i(n-i)}{n}}} 
+\le \sum_{i=1}^{n/2} \frac{n^i}{n^{\frac{5i}{2}}}
+= \sum_{i=1}^{n/2} \frac{1}{n^{\frac{3i}{2}}} \le \frac{n}{n^3}=
+\frac{1}{n^2} \le \frac{1}{n} \implies
+$ G is connected with probability at least $1-\frac{1}{n}$.
+
+\subsection{Question b:}
+
+Graph G should be a k-edge connected graph. $\therefore$ G 
+should remain connected if k-1 edges are removed but should get 
+disconnected if k edges are removed. Suppose G splits into
+(i, n-i-k) when k edges are removed but remains connected if 
+k-1 edges are removed instead. \\
+Prob(G is a k-edge connected graph) $\le \sum_{t=k}^{ik}
+{n \choose k}{n-k \choose i}{ik \choose t}p^t (1-p)^{i(n-i)-t},$ 
+where ${n \choose k}$ denotes choosing k edges out of n;
+${n-k \choose i}$ denotes choosing i nodes out of the remaining 
+n-k nodes upon k edges removal; ${ik \choose t}$ denotes
+choosing edges that keep the graph connected when k-1 edges
+are removed. \\
+$\therefore$ P(G is k-edge connected) $\le \sum_{t=k}^{ik}
+\frac {n^k}{k!} \frac{(n-k)^i}{i!}\frac{(ik)^t}{t!}p^t(1-p)^{i(n-i)-t}
+\le \sum_{t=k}^{ik}
+\frac {n^k}{k!} \frac{(n-k)^i}{i!}\frac{(ik)^t}{t!}p^t(1-p)^{i(n-i)-ik}
+\le \sum_{t=k}^{ik}
+\frac {n^k}{k!} \frac{(n-k)^i}{i!}\frac{(ik)^t}{t!}(\frac{cklogn}{n})^tn^{-(cki(n-i-k))/n}
+\le \frac {n^2}{n^c} \le \frac {1}{n}. \\
+\implies$ GH Tree of G has edge weights of at least k with a 
+probability at least $1-\frac{1}{n}.$
+
+\subsection{Question c:}
+
+\includegraphics{img1.png} \\
+\includegraphics{img2.png} \\
+\includegraphics{img3.png}\\
+\includegraphics{img4.png}\\
+
+Adding an edge will reduce the number of connected components to
+create a larger connected component, as evident in the graphs.
+Upon increasing the probability of an edge getting added,
+the number of connected component decreases, while the size of
+largest connected component increases. When p is of the order
+O($\frac {\lambda logn} {n}$), where $\lambda > 1,$ the graph 
+G(n,p) is connected with a probability $\ge 1- \frac{1}{n}, $
+as shown in Q2 part a and b. As evident in the plots, the 
+size and number of connected components change dramatically
+when p reaches order $O(\frac {logn} {n}) \approx log(40)/40=0.04.$ 
+Once p crosses this threshold, the size of largest connected component
+increases while the number of connected components decreases as 
+the graph begins to get connected. 
+
+\end{document}
+
+ 
